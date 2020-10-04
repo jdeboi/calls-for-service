@@ -1,46 +1,44 @@
-
-var margin = {top: 20, right: 20, bottom: 70, left: 70},
-width = 600 - margin.left - margin.right,
-height = 300 - margin.top - margin.bottom;
-
-// Parse the date / time
-//"01/01/2020 06:53:08 AM"
-var	parseDate = d3.time.format("%m/%d/%Y %I:%M:%S %p").parse;
-var x = d3.scale.linear().range([0, width]);
-var y = d3.scale.linear().range([height, 0]);
-
-var xAxis = d3.svg.axis()
-.scale(x)
-.orient("bottom")
-.ticks(12)
-.tickFormat((d) => d+1);
-
-var yAxis = d3.svg.axis()
-.scale(y)
-.orient("left")
-.ticks(10);
-
-var svg = d3.select("#barChart").append("svg")
-.attr("width", width + margin.left + margin.right)
-.attr("height", height + margin.top + margin.bottom)
-.append("g")
-.attr("transform",
-"translate(" + margin.left + "," + margin.top + ")");
-
 const months = new Array(12).fill(0);
-d3.csv("data/2020.csv", function(error, data) {
 
-  // summing up data per month
-  data.forEach(function(d) {
-    if (d.TimeCreate) {
-      d.date = parseDate(d.TimeCreate);
-      months[d.date.getMonth()]++;
-    }
-    else {
-      d.date = new Date();
-    }
-  });
-  console.log(months);
+function sumMonth(d) {
+  if (d.TimeCreate) {
+    d.date = parseDate(d.TimeCreate);
+    months[d.date.getMonth()]++;
+  }
+  else {
+    d.date = new Date();
+  }
+}
+
+function displayCallsPerMonth() {
+
+  var margin = {top: 20, right: 20, bottom: 70, left: 70},
+  width = 600 - margin.left - margin.right,
+  height = 300 - margin.top - margin.bottom;
+
+  // Parse the date / time
+  //"01/01/2020 06:53:08 AM"
+  var x = d3.scaleLinear().range([0, width]);
+  var y = d3.scaleLinear().range([height, 0]);
+
+
+
+  var xAxis = d3.axisBottom()
+  .scale(x)
+  .ticks(12)
+  .tickFormat((d) => d+1);
+
+  var yAxis = d3.axisLeft()
+  .scale(y)
+  .ticks(10);
+
+  var svg = d3.select("#barChart").append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform",
+  "translate(" + margin.left + "," + margin.top + ")");
+
 
   // setting up x & y scale
   x.domain([0, 11]);
@@ -88,21 +86,4 @@ d3.csv("data/2020.csv", function(error, data) {
   .attr("dy", "1em")
   .style("text-anchor", "middle")
   .text("Reports");
-
-});
-
-function testing(data) {
-  // first doc
-  console.log(data[0]);
-  console.log(parseDate(data[0].TimeCreate).getMonth());
-
-  // select data
-  for (let i = 0; i < 100; i++) {
-    const d = data[i];
-    if (d.TimeCreate) {
-      d.date = parseDate(d.TimeCreate);
-      let m = d.date.getMonth();
-      months[m]++;
-    }
-  }
 }
