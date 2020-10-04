@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>NOPD Calls for Service Analysis</title>
+  <meta charset="utf-8">
+  <meta name="description" content="NOLA visualizations of data from 911 calls">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div className="info">
+    <h1>Call for Service 2020</h1>
+    <p><a href="https://data.nola.gov/Public-Safety-and-Preparedness/Call-for-Service-2020/hp7u-i9hf">Link to data set</a></p>
+    <p>Last updated October 3, 2020</p>
+  </div>
+  <div className="data">
+    <div id="barChart"></div>
+    <div id="pieChart"></div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+  <script src="visualize/callsPerMonth.js"></script>
+  <script src="visualize/callsPerType.js"></script>
+</body>
+</html>
